@@ -1,2 +1,7 @@
 # e-commerce-platform-spring-boot-backend
-A Spring Boot-based backend for an e-commerce platform. It provides RESTful APIs for user management, product management, order processing. Utilizes Spring Data JPA, and integrates with PostgreSQL. Designed for scalability and efficiency. Contributions welcome.
+
+## Contribute
+If you want to contribute, feel free to reach out to me via email at [nadimnesar.cse@gmail.com](mailto:nadimnesar.cse@gmail.com) or text me [Linkedin profile](https://www.linkedin.com/in/nadimnesar/).
+
+## Use Case Diagram
+<img src="/src/main/resources/static/img/e-commerce-diagram-v1.drawio.png">
