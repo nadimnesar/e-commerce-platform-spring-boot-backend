@@ -1,6 +1,6 @@
 package com.ecommerce.main.controller;
 
-import com.ecommerce.main.model.Product;
+import com.ecommerce.main.model.entity.Product;
 import com.ecommerce.main.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
