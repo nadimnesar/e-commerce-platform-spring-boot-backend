@@ -7,5 +7,5 @@ If you want to contribute, feel free to reach out to me via email at [nadimnesar
 <img src="/src/main/resources/static/img/e-commerce-diagram.drawio.png" alt="diagram">
 
 ## Endpoints
-1. /api/product/get-all (Get All Products)
-2. /api/product/{productId} (Get Product By ID)
+1. `GET /api/product/get-all` : Get All Products
+2. `GET /api/product/{productId}` : Get Product By ID
