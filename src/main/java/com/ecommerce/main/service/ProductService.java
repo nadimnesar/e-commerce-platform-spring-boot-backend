@@ -18,4 +18,10 @@ public class ProductService {
     public List<Product> getAll() {
         return productRepository.findAll();
     }
+
+    public Product getById(Integer productId) {
+        if(productRepository.findById(productId).isPresent())
+            return productRepository.findById(productId).get();
+        return null;
+    }
 }
