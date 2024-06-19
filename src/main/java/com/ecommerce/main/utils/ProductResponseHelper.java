@@ -9,16 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProductResponseHelper {
-    public static ResponseEntity<?> createResponse(List<Product> products){
-        if(products.isEmpty()){
+    public static ResponseEntity<?> createResponse(List<Product> products) {
+        if (products.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
             error.put("message", "Products not found");
             return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
         }
-        return  new ResponseEntity<>(products, HttpStatus.OK);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    public static ResponseEntity<?> createResponse(Product product){
+    public static ResponseEntity<?> createResponse(Product product) {
         if (product == null) {
             HashMap<String, String> error = new HashMap<>();
             error.put("message", "Product not found");
@@ -27,8 +27,8 @@ public class ProductResponseHelper {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    public static ResponseEntity<?> createResponse(Page<Product> productsPage){
-        if(productsPage.isEmpty()){
+    public static ResponseEntity<?> createResponse(Page<Product> productsPage) {
+        if (productsPage.isEmpty()) {
             HashMap<String, String> error = new HashMap<>();
             error.put("message", "Product not found");
             return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);

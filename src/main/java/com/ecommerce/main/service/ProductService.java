@@ -32,6 +32,11 @@ public class ProductService {
         return productRepository.findByProductCategory(categoryName);
     }
 
+    public Page<Product> getAllByCategoryName(ProductCategoryTypes categoryName, Integer pageNo, Integer limit) {
+        Pageable pageable = PageRequest.of(pageNo, limit);
+        return productRepository.findByProductCategory(categoryName, pageable);
+    }
+
     public Product getById(Integer productId) {
         if (productRepository.findById(productId).isPresent())
             return productRepository.findById(productId).get();

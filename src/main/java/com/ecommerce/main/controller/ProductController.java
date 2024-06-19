@@ -25,11 +25,10 @@ public class ProductController {
     @GetMapping("/products/all")
     public ResponseEntity<?> getAll(@RequestParam(required = false) Integer pageNo,
                                     @RequestParam(required = false) Integer limit) {
-        if(pageNo != null && limit != null){
+        if (pageNo != null && limit != null) {
             Page<Product> productsPage = productService.getAll(pageNo, limit);
             return ProductResponseHelper.createResponse(productsPage);
-        }
-        else {
+        } else {
             List<Product> products = productService.getAll();
             return ProductResponseHelper.createResponse(products);
         }
@@ -42,7 +41,9 @@ public class ProductController {
     }
 
     @GetMapping("/products/{categoryName}")
-    public ResponseEntity<?> getAllByCategoryName(@PathVariable String categoryName) {
+    public ResponseEntity<?> getAllByCategoryName(@PathVariable String categoryName,
+                                                  @RequestParam(required = false) Integer pageNo,
+                                                  @RequestParam(required = false) Integer limit) {
         ProductCategoryTypes type = ProductCategoryTypes.getCorrectType(categoryName);
         if (type == null) {
             HashMap<String, String> error = new HashMap<>();
@@ -51,7 +52,12 @@ public class ProductController {
             return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
         }
 
-        List<Product> products = productService.getAllByCategoryName(type);
-        return ProductResponseHelper.createResponse(products);
+        if (pageNo != null && limit != null) {
+            Page<Product> productsPage = productService.getAllByCategoryName(type, pageNo, limit);
+            return ProductResponseHelper.createResponse(productsPage);
+        } else {
+            List<Product> products = productService.getAllByCategoryName(type);
+            return ProductResponseHelper.createResponse(products);
+        }
     }
 }
