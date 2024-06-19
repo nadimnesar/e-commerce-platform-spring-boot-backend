@@ -13,8 +13,6 @@ public class ProductResponseHelper {
         HashMap<String, String> error = new HashMap<>();
         error.put("message", "Not found.");
 
-        if (object instanceof ResponseEntity<?>) return (ResponseEntity<?>) object;
-
         if (object instanceof List<?>) {
             List<Product> productsList = (List<Product>) object;
             if (productsList.isEmpty()) return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
@@ -27,8 +25,14 @@ public class ProductResponseHelper {
             else return new ResponseEntity<>(productsPage, HttpStatus.OK);
         }
 
-        Product product = (Product) object;
-        if (product == null) return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-        else return new ResponseEntity<>(product, HttpStatus.OK);
+        return (ResponseEntity<?>) object;
+    }
+
+    public static ResponseEntity<?> createResponse(Product product) {
+        if (product == null) {
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Not found.");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        } else return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }

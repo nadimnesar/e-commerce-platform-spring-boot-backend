@@ -23,17 +23,17 @@ public class ProductController {
         return ProductResponseHelper.createResponse(object);
     }
 
-    @GetMapping("/product/{productId}")
-    public ResponseEntity<?> getById(@PathVariable Integer productId) {
-        Product product = productService.getById(productId);
-        return ProductResponseHelper.createResponse(product);
-    }
-
     @GetMapping("/products/{categoryName}")
     public ResponseEntity<?> getAllByCategoryName(@PathVariable String categoryName,
                                                   @RequestParam(required = false) Integer pageNo,
                                                   @RequestParam(required = false) Integer limit) {
-        Object products = productService.getAllByCategoryName(categoryName, pageNo, limit);
-        return ProductResponseHelper.createResponse(products);
+        Object object = productService.getAllByCategoryName(categoryName, pageNo, limit);
+        return ProductResponseHelper.createResponse(object);
+    }
+
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<?> getById(@PathVariable Integer productId) {
+        Product product = productService.getById(productId);
+        return ProductResponseHelper.createResponse(product);
     }
 }
