@@ -1,6 +1,6 @@
-package com.ecommerce.main.model.entity;
+package com.ecommerce.main.model;
 
-import com.ecommerce.main.model.enums.ProductCategoryTypes;
+import com.ecommerce.main.enums.ProductCategoryTypes;
 import jakarta.persistence.*;
 import lombok.*;
 

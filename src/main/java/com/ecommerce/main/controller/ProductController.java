@@ -1,6 +1,6 @@
 package com.ecommerce.main.controller;
 
-import com.ecommerce.main.model.entity.Product;
+import com.ecommerce.main.model.Product;
 import com.ecommerce.main.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,8 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    public ProductController(ProductService productService){
+
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
@@ -27,9 +28,9 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<?> getById(@PathVariable Integer productId){
+    public ResponseEntity<?> getById(@PathVariable Integer productId) {
         Product product = productService.getById(productId);
-        if(product == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (product == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }

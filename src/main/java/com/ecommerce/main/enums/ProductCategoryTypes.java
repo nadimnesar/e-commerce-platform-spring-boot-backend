@@ -1,4 +1,4 @@
-package com.ecommerce.main.model.enums;
+package com.ecommerce.main.enums;
 
 public enum ProductCategoryTypes {
     Fashion,Lifestyle,Health,Electronics,Groceries,Sports
