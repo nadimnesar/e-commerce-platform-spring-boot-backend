@@ -9,30 +9,26 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProductResponseHelper {
-    public static ResponseEntity<?> createResponse(List<Product> products) {
-        if (products.isEmpty()) {
-            HashMap<String, String> error = new HashMap<>();
-            error.put("message", "Products not found");
-            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }
+    public static ResponseEntity<?> createResponse(Object object) {
+        HashMap<String, String> error = new HashMap<>();
+        error.put("message", "Not found.");
 
-    public static ResponseEntity<?> createResponse(Product product) {
-        if (product == null) {
-            HashMap<String, String> error = new HashMap<>();
-            error.put("message", "Product not found");
-            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(product, HttpStatus.OK);
-    }
+        if (object instanceof ResponseEntity<?>) return (ResponseEntity<?>) object;
 
-    public static ResponseEntity<?> createResponse(Page<Product> productsPage) {
-        if (productsPage.isEmpty()) {
-            HashMap<String, String> error = new HashMap<>();
-            error.put("message", "Product not found");
-            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        if (object instanceof List<?>) {
+            List<Product> productsList = (List<Product>) object;
+            if (productsList.isEmpty()) return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+            else return new ResponseEntity<>(productsList, HttpStatus.OK);
         }
-        return new ResponseEntity<>(productsPage, HttpStatus.OK);
+
+        if (object instanceof Page<?>) {
+            Page<Product> productsPage = (Page<Product>) object;
+            if (productsPage.isEmpty()) return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+            else return new ResponseEntity<>(productsPage, HttpStatus.OK);
+        }
+
+        Product product = (Product) object;
+        if (product == null) return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        else return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }
