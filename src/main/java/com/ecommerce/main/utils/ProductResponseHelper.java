@@ -1,6 +1,7 @@
 package com.ecommerce.main.utils;
 
 import com.ecommerce.main.model.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -24,5 +25,14 @@ public class ProductResponseHelper {
             return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    public static ResponseEntity<?> createResponse(Page<Product> productsPage){
+        if(productsPage.isEmpty()){
+            HashMap<String, String> error = new HashMap<>();
+            error.put("message", "Product not found");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(productsPage, HttpStatus.OK);
     }
 }

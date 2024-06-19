@@ -3,6 +3,9 @@ package com.ecommerce.main.service;
 import com.ecommerce.main.enums.ProductCategoryTypes;
 import com.ecommerce.main.model.Product;
 import com.ecommerce.main.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,11 @@ public class ProductService {
 
     public List<Product> getAll() {
         return productRepository.findAll();
+    }
+
+    public Page<Product> getAll(Integer pageNo, Integer limit) {
+        Pageable pageable = PageRequest.of(pageNo, limit);
+        return productRepository.findAll(pageable);
     }
 
     public List<Product> getAllByCategoryName(ProductCategoryTypes categoryName) {

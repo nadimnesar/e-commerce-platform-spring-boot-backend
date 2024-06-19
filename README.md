@@ -8,5 +8,6 @@ If you want to contribute, feel free to reach out to me via email at [nadimnesar
 
 ## Endpoints
 1. `GET /api/products/all` : Get All Products
+2. `GET /api/products/all?pageNo={pageNumber}&limit={productsLimitPerPage}` : Get All Products with Pagination
 2. `GET /api/product/{productId}` : Get Product By ID
 3. `GET /api/products/{categoryName}` : Get Product By Category Name
