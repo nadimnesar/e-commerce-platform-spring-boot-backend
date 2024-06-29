@@ -1,7 +1,6 @@
-package com.ecommerce.main.model;
+package com.ecommerce.main.dto;
 
 import com.ecommerce.main.enums.ProductCategoryTypes;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,25 +8,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer productId;
-
-    @Column(nullable = false)
+@AllArgsConstructor
+public class ProductDto {
     private String productTitle;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private ProductCategoryTypes productCategory;
-
-    @Column(nullable = false)
     private Double price;
-
-    @Column(nullable = false)
     private Integer stock;
 
     private String productBrand;

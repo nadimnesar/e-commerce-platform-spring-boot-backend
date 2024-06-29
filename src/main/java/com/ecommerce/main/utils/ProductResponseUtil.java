@@ -4,11 +4,13 @@ import com.ecommerce.main.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class ProductResponseHelper {
+public class ProductResponseUtil {
     public static ResponseEntity<?> createResponse(Object object) {
         HashMap<String, String> error = new HashMap<>();
         error.put("message", "Not found.");
@@ -24,7 +26,6 @@ public class ProductResponseHelper {
             if (productsPage.isEmpty()) return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
             else return new ResponseEntity<>(productsPage, HttpStatus.OK);
         }
-
         return (ResponseEntity<?>) object;
     }
 

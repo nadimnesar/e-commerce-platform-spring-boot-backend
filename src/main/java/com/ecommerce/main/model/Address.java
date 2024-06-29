@@ -1,6 +1,5 @@
 package com.ecommerce.main.model;
 
-import com.ecommerce.main.enums.ProductCategoryTypes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,25 +11,24 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Product {
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer productId;
+    private Integer id;
 
     @Column(nullable = false)
-    private String productTitle;
+    private String line1;
+    private String line2;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ProductCategoryTypes productCategory;
+    private String city;
 
     @Column(nullable = false)
-    private Double price;
+    private String state;
 
     @Column(nullable = false)
-    private Integer stock;
+    private String postalCode;
 
-    private String productBrand;
-    private String productDescription;
-    private String imageUrl;
+    @Column(nullable = false)
+    private String country;
 }

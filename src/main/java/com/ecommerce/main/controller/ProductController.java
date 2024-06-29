@@ -2,14 +2,13 @@ package com.ecommerce.main.controller;
 
 import com.ecommerce.main.model.Product;
 import com.ecommerce.main.service.ProductService;
-import com.ecommerce.main.utils.ProductResponseHelper;
+import com.ecommerce.main.utils.ProductResponseUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class ProductController {
-
     private final ProductService productService;
 
     public ProductController(ProductService productService) {
@@ -20,7 +19,7 @@ public class ProductController {
     public ResponseEntity<?> getAll(@RequestParam(required = false) Integer pageNo,
                                     @RequestParam(required = false) Integer limit) {
         Object object = productService.getAll(pageNo, limit);
-        return ProductResponseHelper.createResponse(object);
+        return ProductResponseUtil.createResponse(object);
     }
 
     @GetMapping("/products/{categoryName}")
@@ -28,12 +27,12 @@ public class ProductController {
                                                   @RequestParam(required = false) Integer pageNo,
                                                   @RequestParam(required = false) Integer limit) {
         Object object = productService.getAllByCategoryName(categoryName, pageNo, limit);
-        return ProductResponseHelper.createResponse(object);
+        return ProductResponseUtil.createResponse(object);
     }
 
     @GetMapping("/product/{productId}")
     public ResponseEntity<?> getById(@PathVariable Integer productId) {
         Product product = productService.getById(productId);
-        return ProductResponseHelper.createResponse(product);
+        return ProductResponseUtil.createResponse(product);
     }
 }
