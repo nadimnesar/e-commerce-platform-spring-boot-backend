@@ -17,5 +17,5 @@ If you want to contribute, feel free to reach out to me via email at [nadimnesar
 3. `GET /api/products/category/{categoryName}` : Get Product By Category Name
 4. `GET /api/products/category/{categoryName}?pageNo={}&limit={}` : Get Product By Category Name with Pagination
 5. `GET /api/products/{productId}` : Get Product By ID
-## Seller
+### Seller
 1. `POST /api/seller/addProduct` : Add a new product, can access by only seller.
