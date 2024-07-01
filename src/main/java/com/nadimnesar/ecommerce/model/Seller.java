@@ -1,6 +1,6 @@
 package com.nadimnesar.ecommerce.model;
 
-import com.nadimnesar.ecommerce.auth0.model.User;
+import com.nadimnesar.ecommerce.auth.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.nadimnesar.ecommerce.auth0.config;
+package com.nadimnesar.ecommerce.auth.config;
 
-import com.nadimnesar.ecommerce.auth0.repository.UserRepository;
+import com.nadimnesar.ecommerce.auth.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +27,7 @@ public class SecurityBeanConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return userRepository::findByEmail;
+        return username -> userRepository.findByEmail(username);
     }
 
     @Bean

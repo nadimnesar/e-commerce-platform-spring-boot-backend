@@ -1,4 +1,4 @@
-package com.nadimnesar.ecommerce.auth0.enums;
+package com.nadimnesar.ecommerce.auth.enums;
 
 public enum UserRoleTypes {
     SELLER, CUSTOMER

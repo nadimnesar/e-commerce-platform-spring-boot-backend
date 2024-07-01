@@ -1,6 +1,6 @@
-package com.nadimnesar.ecommerce.auth0.dto;
+package com.nadimnesar.ecommerce.auth.dto;
 
-import com.nadimnesar.ecommerce.auth0.enums.UserRoleTypes;
+import com.nadimnesar.ecommerce.auth.enums.UserRoleTypes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

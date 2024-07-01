@@ -1,4 +1,4 @@
-package com.nadimnesar.ecommerce.auth0.dto;
+package com.nadimnesar.ecommerce.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

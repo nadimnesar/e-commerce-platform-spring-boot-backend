@@ -1,6 +1,6 @@
-package com.nadimnesar.ecommerce.auth0.model;
+package com.nadimnesar.ecommerce.auth.model;
 
-import com.nadimnesar.ecommerce.auth0.enums.UserRoleTypes;
+import com.nadimnesar.ecommerce.auth.enums.UserRoleTypes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

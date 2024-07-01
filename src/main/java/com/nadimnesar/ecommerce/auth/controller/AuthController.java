@@ -1,8 +1,8 @@
-package com.nadimnesar.ecommerce.auth0.controller;
+package com.nadimnesar.ecommerce.auth.controller;
 
-import com.nadimnesar.ecommerce.auth0.dto.UserDto;
-import com.nadimnesar.ecommerce.auth0.enums.UserRoleTypes;
-import com.nadimnesar.ecommerce.auth0.service.AuthenticationService;
+import com.nadimnesar.ecommerce.auth.dto.UserDto;
+import com.nadimnesar.ecommerce.auth.enums.UserRoleTypes;
+import com.nadimnesar.ecommerce.auth.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

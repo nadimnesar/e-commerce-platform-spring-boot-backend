@@ -1,20 +1,14 @@
-package com.nadimnesar.ecommerce.auth0.service;
+package com.nadimnesar.ecommerce.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-
-import static javax.crypto.Cipher.SECRET_KEY;
 
 @Service
 public class JwtService {
@@ -38,10 +32,10 @@ public class JwtService {
     public Claims getClaimsFromToken(String token) {
         return Jwts
                 .parser()
-                .setSigningKey(getSignInKey())
+                .verifyWith(getSignInKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     public String extractUsername(String token) {
@@ -50,14 +44,14 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        HashMap<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("role", userDetails.getAuthorities());
         return Jwts.builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
-                .signWith(SignatureAlgorithm.HS256, getSignInKey())
+                .claims()
+                .add("role", userDetails.getAuthorities())
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
+                .and()
+                .signWith(getSignInKey())
                 .compact();
     }
 
