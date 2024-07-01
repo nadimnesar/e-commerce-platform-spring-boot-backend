@@ -3,7 +3,6 @@ package com.nadimnesar.ecommerce.controller;
 import com.nadimnesar.ecommerce.model.Product;
 import com.nadimnesar.ecommerce.service.ProductService;
 import com.nadimnesar.ecommerce.utils.ProductResponseUtil;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
