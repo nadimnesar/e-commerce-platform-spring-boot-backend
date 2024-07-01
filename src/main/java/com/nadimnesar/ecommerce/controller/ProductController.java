@@ -3,11 +3,12 @@ package com.nadimnesar.ecommerce.controller;
 import com.nadimnesar.ecommerce.model.Product;
 import com.nadimnesar.ecommerce.service.ProductService;
 import com.nadimnesar.ecommerce.utils.ProductResponseUtil;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
 
@@ -15,14 +16,14 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/products/all")
+    @GetMapping("/all")
     public ResponseEntity<?> getAll(@RequestParam(required = false) Integer pageNo,
                                     @RequestParam(required = false) Integer limit) {
         Object object = productService.getAll(pageNo, limit);
         return ProductResponseUtil.createResponse(object);
     }
 
-    @GetMapping("/products/{categoryName}")
+    @GetMapping("/category/{categoryName}")
     public ResponseEntity<?> getAllByCategoryName(@PathVariable String categoryName,
                                                   @RequestParam(required = false) Integer pageNo,
                                                   @RequestParam(required = false) Integer limit) {
@@ -30,9 +31,9 @@ public class ProductController {
         return ProductResponseUtil.createResponse(object);
     }
 
-    @GetMapping("/products/{productId}")
-    public ResponseEntity<?> getById(@PathVariable Integer productId) {
-        Product product = productService.getById(productId);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Integer id) {
+        Product product = productService.getById(id);
         return ProductResponseUtil.createResponse(product);
     }
 }

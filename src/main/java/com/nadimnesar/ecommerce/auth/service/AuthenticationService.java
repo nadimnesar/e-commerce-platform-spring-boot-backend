@@ -32,7 +32,8 @@ public class AuthenticationService {
     private final CartRepository cartRepository;
 
     public AuthenticationService(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
-                                 UserRepository userRepository, JwtService jwtService, SellerRepository sellerRepository, CustomerRepository customerRepository, CartRepository cartRepository) {
+                                 UserRepository userRepository, JwtService jwtService, SellerRepository sellerRepository,
+                                 CustomerRepository customerRepository, CartRepository cartRepository) {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
@@ -49,7 +50,7 @@ public class AuthenticationService {
 
     public ResponseEntity<?> register(UserDto userDto, UserRole role) {
         if (invalidUserDto(userDto)) return new ResponseEntity<>(
-                "Please provide name, mobileNumber, email, password.", HttpStatus.BAD_REQUEST);
+                "Please provide name, mobileNumber, email and password.", HttpStatus.BAD_REQUEST);
 
         User user = new User();
         user.setName(userDto.getName());

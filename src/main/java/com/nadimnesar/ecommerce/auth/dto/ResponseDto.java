@@ -12,5 +12,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ResponseDto {
     private String jwt;
-    private UserRole userRoleType;
+    private UserRole userRole;
 }
