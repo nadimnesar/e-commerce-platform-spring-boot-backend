@@ -1,5 +1,5 @@
 package com.nadimnesar.ecommerce.enums;
 
-public enum OrderStatusTypes {
+public enum OrderStatus {
     Delivered, Pending, Cancelled
 }

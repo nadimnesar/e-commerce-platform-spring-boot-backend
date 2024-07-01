@@ -1,6 +1,6 @@
 package com.nadimnesar.ecommerce.auth.dto;
 
-import com.nadimnesar.ecommerce.auth.enums.UserRoleTypes;
+import com.nadimnesar.ecommerce.auth.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,5 +12,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AuthResponseDto {
     private String jwt;
-    private UserRoleTypes userRoleType;
+    private UserRole userRoleType;
 }

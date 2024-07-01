@@ -18,8 +18,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CartItem> cartItems;
+    @OneToMany
+    private List<CartItem> items;
 
-    private Double totalPrice;
+    private Double total;
 }

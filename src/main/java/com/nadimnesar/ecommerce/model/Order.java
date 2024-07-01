@@ -1,6 +1,6 @@
 package com.nadimnesar.ecommerce.model;
 
-import com.nadimnesar.ecommerce.enums.OrderStatusTypes;
+import com.nadimnesar.ecommerce.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
@@ -21,15 +20,15 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private LocalDate orderDate;
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatusTypes orderStatus;
+    private OrderStatus status;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CartItem> cartItems;
+    @OneToOne
+    private Cart cart;
 
-    private Double totalPrice;
+    private Double total;
 
     @OneToOne
     private Address shippingAddress;

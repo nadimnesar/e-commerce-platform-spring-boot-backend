@@ -2,7 +2,7 @@ package com.nadimnesar.ecommerce.auth.service;
 
 import com.nadimnesar.ecommerce.auth.dto.AuthResponseDto;
 import com.nadimnesar.ecommerce.auth.dto.UserDto;
-import com.nadimnesar.ecommerce.auth.enums.UserRoleTypes;
+import com.nadimnesar.ecommerce.auth.enums.UserRole;
 import com.nadimnesar.ecommerce.auth.model.User;
 import com.nadimnesar.ecommerce.auth.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -19,6 +19,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+
     public AuthenticationService(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
                                  UserRepository userRepository, JwtService jwtService) {
         this.authenticationManager = authenticationManager;
@@ -28,12 +29,13 @@ public class AuthenticationService {
     }
 
     public boolean invalidUserDto(UserDto userDto) {
-        return (userDto.getPassword() == null) || (userDto.getEmail() == null);
+        return (userDto.getPassword() == null) || (userDto.getEmail() == null) ||
+                (userDto.getName() == null) || (userDto.getMobileNumber() == null);
     }
 
-    public ResponseEntity<?> register(UserDto userDto, UserRoleTypes role) {
+    public ResponseEntity<?> register(UserDto userDto, UserRole role) {
         if (invalidUserDto(userDto)) return new ResponseEntity<>(
-                "Please provide both username and password.", HttpStatus.BAD_REQUEST);
+                "Please provide email, password, name, mobileNumber.", HttpStatus.BAD_REQUEST);
 
         User user = new User();
         user.setName(userDto.getName());
@@ -59,7 +61,7 @@ public class AuthenticationService {
 
     public ResponseEntity<?> login(UserDto userDto) {
         if (invalidUserDto(userDto)) return new ResponseEntity<>(
-                "Please provide both username and password.", HttpStatus.BAD_REQUEST);
+                "Please provide both email and password.", HttpStatus.BAD_REQUEST);
 
         User user = userRepository.findByEmail(userDto.getEmail());
         if (user == null) return new ResponseEntity<>("User not found.", HttpStatus.UNAUTHORIZED);

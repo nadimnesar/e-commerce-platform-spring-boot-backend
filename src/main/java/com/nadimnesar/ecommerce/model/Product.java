@@ -1,6 +1,6 @@
 package com.nadimnesar.ecommerce.model;
 
-import com.nadimnesar.ecommerce.enums.ProductCategoryTypes;
+import com.nadimnesar.ecommerce.enums.ProductCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,22 +15,27 @@ import lombok.Setter;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer productId;
+    private Integer id;
 
     @Column(nullable = false)
-    private String productTitle;
+    private String title;
+
+    @Column(nullable = false)
+    private String brand;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ProductCategoryTypes productCategory;
+    private ProductCategory category;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private String imageUrl;
 
     @Column(nullable = false)
     private Double price;
 
     @Column(nullable = false)
     private Integer stock;
-
-    private String productBrand;
-    private String productDescription;
-    private String imageUrl;
 }

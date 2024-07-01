@@ -1,6 +1,6 @@
 package com.nadimnesar.ecommerce.service;
 
-import com.nadimnesar.ecommerce.enums.ProductCategoryTypes;
+import com.nadimnesar.ecommerce.enums.ProductCategory;
 import com.nadimnesar.ecommerce.model.Product;
 import com.nadimnesar.ecommerce.repository.ProductRepository;
 import org.springframework.data.domain.PageRequest;
@@ -36,19 +36,19 @@ public class ProductService {
     }
 
     public Object getAllByCategoryName(String categoryName, Integer pageNo, Integer limit) {
-        ProductCategoryTypes type = ProductCategoryTypes.getCorrectType(categoryName);
+        ProductCategory type = ProductCategory.getCorrectType(categoryName);
         if (type == null) {
             HashMap<String, String> error = new HashMap<>();
             error.put("message", "Invalid product category");
-            error.put("validCategories", String.join(", ", ProductCategoryTypes.getValidCategories()));
+            error.put("validCategories", String.join(", ", ProductCategory.getValidCategories()));
             return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
         }
 
         if (pageNo != null && limit != null) {
             Pageable pageable = PageRequest.of(pageNo, limit);
-            return productRepository.findByProductCategory(type, pageable);
+            return productRepository.findByCategory(type, pageable);
         } else {
-            return productRepository.findByProductCategory(type);
+            return productRepository.findByCategory(type);
         }
     }
 }

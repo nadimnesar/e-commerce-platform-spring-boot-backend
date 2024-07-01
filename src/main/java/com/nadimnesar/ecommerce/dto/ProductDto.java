@@ -1,6 +1,6 @@
 package com.nadimnesar.ecommerce.dto;
 
-import com.nadimnesar.ecommerce.enums.ProductCategoryTypes;
+import com.nadimnesar.ecommerce.enums.ProductCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProductDto {
     private String productTitle;
-    private ProductCategoryTypes productCategory;
+    private ProductCategory productCategory;
     private Double price;
     private Integer stock;
 

@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum ProductCategoryTypes {
+public enum ProductCategory {
     Fashion, Lifestyle, Health, Electronics, Groceries, Sports;
 
-    public static ProductCategoryTypes getCorrectType(String category) {
-        for (ProductCategoryTypes type : values()) {
+    public static ProductCategory getCorrectType(String category) {
+        for (ProductCategory type : values()) {
             if (type.name().equalsIgnoreCase(category)) {
                 return type;
             }

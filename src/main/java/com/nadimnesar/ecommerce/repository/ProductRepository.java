@@ -1,6 +1,6 @@
 package com.nadimnesar.ecommerce.repository;
 
-import com.nadimnesar.ecommerce.enums.ProductCategoryTypes;
+import com.nadimnesar.ecommerce.enums.ProductCategory;
 import com.nadimnesar.ecommerce.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-    List<Product> findByProductCategory(ProductCategoryTypes productCategory);
-    Page<Product> findByProductCategory(ProductCategoryTypes productCategory, Pageable pageable);
+    List<Product> findByCategory(ProductCategory productCategory);
+    Page<Product> findByCategory(ProductCategory productCategory, Pageable pageable);
 }
