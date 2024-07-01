@@ -16,4 +16,4 @@ If you want to contribute, feel free to reach out to me via email at [nadimnesar
 2. `GET /api/products/all?pageNo={}&limit={}` : Get All Products with Pagination
 3. `GET /api/products/{categoryName}` : Get Product By Category Name
 4. `GET /api/products/{categoryName}?pageNo={}&limit={}` : Get Product By Category Name with Pagination
-5. `GET /api/product/{productId}` : Get Product By ID
+5. `GET /api/products/{productId}` : Get Product By ID

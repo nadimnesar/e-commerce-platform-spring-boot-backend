@@ -34,7 +34,6 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(antMatcher("/api/products/**")).permitAll()
-                        .requestMatchers(antMatcher("/api/product/**")).permitAll()
                         .requestMatchers(antMatcher("/api/auth/**")).permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
