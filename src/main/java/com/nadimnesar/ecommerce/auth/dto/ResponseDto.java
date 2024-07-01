@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponseDto {
+public class ResponseDto {
     private String jwt;
     private UserRole userRoleType;
 }
