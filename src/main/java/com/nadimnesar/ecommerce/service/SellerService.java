@@ -19,10 +19,12 @@ public class SellerService {
 
     private final ProductRepository productRepository;
     private final SellerRepository sellerRepository;
+    private final ProductService productService;
 
-    public SellerService(ProductRepository productRepository, SellerRepository sellerRepository) {
+    public SellerService(ProductRepository productRepository, SellerRepository sellerRepository, ProductService productService) {
         this.productRepository = productRepository;
         this.sellerRepository = sellerRepository;
+        this.productService = productService;
     }
 
     @Transactional
@@ -51,5 +53,12 @@ public class SellerService {
         seller.getProducts().add(product);
         sellerRepository.save(seller);
         return new ResponseEntity<>("Product added successfully.", HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<?> getMyProducts(Integer pageNo, Integer limit) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Seller seller = sellerRepository.findByUserId(((User) userDetails).getId());
+        return productService.getProductsBySellerId(seller.getId(), pageNo, limit);
     }
 }
