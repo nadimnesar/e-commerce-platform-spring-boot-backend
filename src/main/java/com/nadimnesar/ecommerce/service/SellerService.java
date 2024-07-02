@@ -14,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class SellerService {
 
@@ -21,10 +23,17 @@ public class SellerService {
     private final SellerRepository sellerRepository;
     private final ProductService productService;
 
-    public SellerService(ProductRepository productRepository, SellerRepository sellerRepository, ProductService productService) {
+    public SellerService(ProductRepository productRepository, SellerRepository sellerRepository,
+                         ProductService productService) {
         this.productRepository = productRepository;
         this.sellerRepository = sellerRepository;
         this.productService = productService;
+    }
+
+    private Seller getSellerInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return sellerRepository.findByUserId(((User) userDetails).getId());
     }
 
     @Transactional
@@ -38,27 +47,40 @@ public class SellerService {
         product.setPrice(productDto.getPrice());
         product.setStock(productDto.getStock());
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Seller seller = sellerRepository.findByUserId(((User) userDetails).getId());
+        Seller seller = getSellerInfo();
         product.setSeller(seller);
 
         try {
             productRepository.save(product);
         } catch (Exception e) {
-            return new ResponseEntity<>(
-                    "Please provide title, brand, category, description, price and stock.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Please provide title, brand, category, description, price and stock.",
+                    HttpStatus.BAD_REQUEST);
         }
-
         seller.getProducts().add(product);
         sellerRepository.save(seller);
         return new ResponseEntity<>("Product added successfully.", HttpStatus.CREATED);
     }
 
     public ResponseEntity<?> getMyProducts(Integer pageNo, Integer limit) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Seller seller = sellerRepository.findByUserId(((User) userDetails).getId());
-        return productService.getProductsBySellerId(seller.getId(), pageNo, limit);
+        return productService.getProductsBySellerId(getSellerInfo().getId(), pageNo, limit);
+    }
+
+    public ResponseEntity<?> updateProduct(Integer productId, ProductDto productDto) {
+        if (productRepository.findById(productId).isPresent()) {
+            Product product = productRepository.findById(productId).get();
+            if (Objects.equals(product.getSeller().getId(), getSellerInfo().getId())) {
+                if (productDto.getTitle() != null) product.setTitle(productDto.getTitle());
+                if (productDto.getBrand() != null) product.setBrand(productDto.getBrand());
+                if (productDto.getCategory() != null) product.setCategory(productDto.getCategory());
+                if (productDto.getDescription() != null) product.setDescription(productDto.getDescription());
+                if (productDto.getImageUrl() != null) product.setImageUrl(productDto.getImageUrl());
+                if (productDto.getPrice() != null) product.setPrice(productDto.getPrice());
+                if (productDto.getStock() != null) product.setStock(productDto.getStock());
+                productRepository.save(product);
+                return new ResponseEntity<>("Product updated successfully.", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("This product own my someone else.", HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>("Product not found.", HttpStatus.NOT_FOUND);
     }
 }

@@ -27,4 +27,10 @@ public class SellerController {
     public ResponseEntity<?> getProducts(@RequestParam Integer pageNo, @RequestParam Integer limit) {
         return sellerService.getMyProducts(pageNo, limit);
     }
+
+    @PreAuthorize("hasAuthority('SELLER')")
+    @PutMapping("/updateProduct")
+    public ResponseEntity<?> updateProduct(@RequestParam Integer id, @RequestBody ProductDto productDto) {
+        return sellerService.updateProduct(id, productDto);
+    }
 }
