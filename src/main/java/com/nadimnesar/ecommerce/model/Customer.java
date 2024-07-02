@@ -22,8 +22,8 @@ public class Customer {
     @OneToOne
     private User user;
 
-    @OneToMany
-    private List<Address> addresses;
+    @OneToOne
+    private Address address;
 
     @OneToOne
     private Cart cart;

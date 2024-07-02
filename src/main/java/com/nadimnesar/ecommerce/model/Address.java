@@ -1,6 +1,9 @@
 package com.nadimnesar.ecommerce.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,21 +18,10 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(nullable = false)
     private String line1;
-
     private String line2;
-
-    @Column(nullable = false)
     private String city;
-
-    @Column(nullable = false)
     private String state;
-
-    @Column(nullable = false)
     private String postalCode;
-
-    @Column(nullable = false)
     private String country;
 }

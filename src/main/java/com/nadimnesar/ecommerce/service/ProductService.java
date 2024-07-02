@@ -49,4 +49,11 @@ public class ProductService {
         if (products.isEmpty()) return new ResponseEntity<>("Not found.", HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
+    public ResponseEntity<?> getProductsBySellerId(Integer sellerId, Integer pageNo, Integer limit) {
+        Pageable pageable = PageRequest.of(pageNo, limit);
+        Page<Product> products = productRepository.findBySellerId(sellerId, pageable);
+        if (products.isEmpty()) return new ResponseEntity<>("Not found.", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 }

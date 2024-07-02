@@ -35,15 +35,19 @@ public class SellerService {
         product.setImageUrl(productDto.getImageUrl());
         product.setPrice(productDto.getPrice());
         product.setStock(productDto.getStock());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Seller seller = sellerRepository.findByUserId(((User) userDetails).getId());
+        product.setSeller(seller);
+
         try {
             productRepository.save(product);
         } catch (Exception e) {
             return new ResponseEntity<>(
                     "Please provide title, brand, category, description, price and stock.", HttpStatus.BAD_REQUEST);
         }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Seller seller = sellerRepository.findByUserId(((User) userDetails).getId());
+
         seller.getProducts().add(product);
         sellerRepository.save(seller);
         return new ResponseEntity<>("Product added successfully.", HttpStatus.CREATED);

@@ -29,4 +29,9 @@ public class ProductController {
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         return productService.getById(id);
     }
+
+    @GetMapping("/seller/{id}")
+    public ResponseEntity<?> getProductBySellerId(@PathVariable Integer id, @RequestParam Integer pageNo, @RequestParam Integer limit) {
+        return productService.getProductsBySellerId(id, pageNo, limit);
+    }
 }

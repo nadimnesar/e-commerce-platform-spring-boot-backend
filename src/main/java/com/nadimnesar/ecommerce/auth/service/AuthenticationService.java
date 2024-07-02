@@ -5,9 +5,11 @@ import com.nadimnesar.ecommerce.auth.dto.UserDto;
 import com.nadimnesar.ecommerce.auth.enums.UserRole;
 import com.nadimnesar.ecommerce.auth.model.User;
 import com.nadimnesar.ecommerce.auth.repository.UserRepository;
+import com.nadimnesar.ecommerce.model.Address;
 import com.nadimnesar.ecommerce.model.Cart;
 import com.nadimnesar.ecommerce.model.Customer;
 import com.nadimnesar.ecommerce.model.Seller;
+import com.nadimnesar.ecommerce.repository.AddressRepository;
 import com.nadimnesar.ecommerce.repository.CartRepository;
 import com.nadimnesar.ecommerce.repository.CustomerRepository;
 import com.nadimnesar.ecommerce.repository.SellerRepository;
@@ -30,10 +32,12 @@ public class AuthenticationService {
     private final SellerRepository sellerRepository;
     private final CustomerRepository customerRepository;
     private final CartRepository cartRepository;
+    private final AddressRepository addressRepository;
 
     public AuthenticationService(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
                                  UserRepository userRepository, JwtService jwtService, SellerRepository sellerRepository,
-                                 CustomerRepository customerRepository, CartRepository cartRepository) {
+                                 CustomerRepository customerRepository, CartRepository cartRepository,
+                                 AddressRepository addressRepository) {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
@@ -41,6 +45,7 @@ public class AuthenticationService {
         this.sellerRepository = sellerRepository;
         this.customerRepository = customerRepository;
         this.cartRepository = cartRepository;
+        this.addressRepository = addressRepository;
     }
 
     public boolean invalidUserDto(UserDto userDto) {
@@ -71,12 +76,18 @@ public class AuthenticationService {
                 } else {
                     Customer customer = new Customer();
                     customer.setUser(user);
-                    customer.setAddresses(new ArrayList<>());
+
+                    Address address = new Address();
+                    addressRepository.save(address);
+
                     Cart cart = new Cart();
                     cart.setItems(new ArrayList<>());
                     cart.setTotal(0.0);
                     cartRepository.save(cart);
+
+                    customer.setAddress(address);
                     customer.setCart(cart);
+
                     customer.setOrders(new ArrayList<>());
                     customerRepository.save(customer);
                 }
