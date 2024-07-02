@@ -37,7 +37,8 @@ manage essential functionalities of an online e-commerce store.
 
 - `POST /api/seller/addProduct`
     - Add a new product, can access by only seller.
-- Show my products, can view own products only.
+- `GET /api/seller/products`
+  - Show my products, can view own products only.
 - Update a product by id, can update own product only.
 - Delete a product by id, can delete own product only.
 
