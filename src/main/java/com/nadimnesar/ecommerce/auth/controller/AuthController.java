@@ -26,7 +26,7 @@ public class AuthController {
         return authenticationService.register(userDto, UserRole.SELLER);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> getLogin(@RequestBody UserDto userDto) {
         return authenticationService.login(userDto);
     }

@@ -103,8 +103,9 @@ public class AuthenticationService {
     }
 
     public ResponseEntity<?> login(UserDto userDto) {
-        if (invalidUserDto(userDto)) return new ResponseEntity<>(
-                "Please provide both email and password.", HttpStatus.BAD_REQUEST);
+        if(userDto.getEmail() == null || userDto.getPassword() == null) {
+            return new ResponseEntity<>("Please provide both email and password.", HttpStatus.BAD_REQUEST);
+        }
 
         User user = userRepository.findByEmail(userDto.getEmail());
         if (user == null) return new ResponseEntity<>("User not found.", HttpStatus.UNAUTHORIZED);
