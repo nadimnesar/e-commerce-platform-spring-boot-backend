@@ -4,7 +4,7 @@ This is a scalable backend for an e-commerce  platform using Spring Boot. It pro
 ## Entity Relation Diagram
 <img src="/src/main/resources/static/img/e-commerce-diagram-v4.png" alt="diagram">
 
-## Endpoints
+## RESTful Endpoints
 ### Base Url
 - localhost:8080
 ### Authentication
