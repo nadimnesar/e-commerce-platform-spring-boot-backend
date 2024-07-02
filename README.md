@@ -6,7 +6,7 @@ This is a scalable backend for an e-commerce  platform using Spring Boot. It pro
 
 ## Endpoints
 ### Base Url
-- http://localhost:8080
+- localhost:8080
 ### Authentication
 - `POST /api/auth/register`
   - Register as a customer
@@ -15,16 +15,12 @@ This is a scalable backend for an e-commerce  platform using Spring Boot. It pro
 - `POST /api/auth/login`
   - Login and get new JWT token
 ### Products
-- `GET /api/products/all`
-  - Get All Products
 - `GET /api/products/all?pageNo={}&limit={}`
-  - Get All Products with Pagination
-- `GET /api/products/category/{categoryName}`
-  - Get Product By Category Namedar
+  - Get all products with pagination.
 - `GET /api/products/category/{categoryName}?pageNo={}&limit={}`
-  - Get Product By Category Name with Pagination
+  - Get all products by category name with pagination.
 - `GET /api/products/{productId}`
-  - Get Product By ID
+  - Get product by id.
 ### Seller
 - `POST /api/seller/addProduct`
   - Add a new product, can access by only seller.

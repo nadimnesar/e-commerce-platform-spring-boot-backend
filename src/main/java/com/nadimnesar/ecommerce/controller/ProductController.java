@@ -1,8 +1,6 @@
 package com.nadimnesar.ecommerce.controller;
 
-import com.nadimnesar.ecommerce.model.Product;
 import com.nadimnesar.ecommerce.service.ProductService;
-import com.nadimnesar.ecommerce.utils.ProductResponseUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,23 +14,19 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAll(@RequestParam(required = false) Integer pageNo,
-                                    @RequestParam(required = false) Integer limit) {
-        Object object = productService.getAll(pageNo, limit);
-        return ProductResponseUtil.createResponse(object);
+    public ResponseEntity<?> getAll(@RequestParam Integer pageNo, @RequestParam Integer limit) {
+        return productService.getAll(pageNo, limit);
     }
 
     @GetMapping("/category/{categoryName}")
     public ResponseEntity<?> getAllByCategoryName(@PathVariable String categoryName,
-                                                  @RequestParam(required = false) Integer pageNo,
-                                                  @RequestParam(required = false) Integer limit) {
-        Object object = productService.getAllByCategoryName(categoryName, pageNo, limit);
-        return ProductResponseUtil.createResponse(object);
+                                                  @RequestParam Integer pageNo,
+                                                  @RequestParam Integer limit) {
+        return productService.getAllByCategoryName(categoryName, pageNo, limit);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
-        Product product = productService.getById(id);
-        return ProductResponseUtil.createResponse(product);
+        return productService.getById(id);
     }
 }
