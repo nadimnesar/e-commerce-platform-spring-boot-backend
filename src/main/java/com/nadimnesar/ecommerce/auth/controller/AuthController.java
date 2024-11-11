@@ -4,7 +4,10 @@ import com.nadimnesar.ecommerce.auth.dto.UserDto;
 import com.nadimnesar.ecommerce.auth.enums.UserRole;
 import com.nadimnesar.ecommerce.auth.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth/")

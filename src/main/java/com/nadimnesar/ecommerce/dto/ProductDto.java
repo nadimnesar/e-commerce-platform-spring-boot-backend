@@ -2,12 +2,10 @@ package com.nadimnesar.ecommerce.dto;
 
 import com.nadimnesar.ecommerce.enums.ProductCategory;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDto {
