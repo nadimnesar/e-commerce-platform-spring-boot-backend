@@ -46,11 +46,14 @@ manage essential functionalities of an online e-commerce store.
 
 ### Customer
 
-- Update address, without address can't order.
-- Add to cart by product id.
-- Update from cart by product id.
-- Remove from cart by product id.
-- Get Cart Details
+- `POST /api/customer/updateAddress`
+  - Update address, without address can't order.
+- `POST /api/customer/addToCart?productId={}&quantity={}`
+  - Add to cart by product id.
+- `DELETE /api/customer/removeFromCart?productId={}&quantity={}`
+  - Remove from cart by product id.
+- `GET /api/customer/getCart`
+  - Get Cart Details
 - Place order, all items from cart.
 - Cancel order by id.
 - Get all orders, can view own orders only.

@@ -1,6 +1,7 @@
-package com.nadimnesar.ecommerce.model;
+package com.nadimnesar.ecommerce.dto;
 
-import jakarta.persistence.*;
+
+import com.nadimnesar.ecommerce.model.CartItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,14 +11,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Cart {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CartDto {
     private Integer id;
-
-    @OneToMany(fetch = FetchType.EAGER)
     private List<CartItem> items;
-
     private Double total;
 }

@@ -1,5 +1,6 @@
 package com.nadimnesar.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nadimnesar.ecommerce.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,4 +31,8 @@ public class Order {
 
     @OneToOne
     private Address shippingAddress;
+
+    @ManyToOne
+    @JsonBackReference
+    private Customer customer;
 }

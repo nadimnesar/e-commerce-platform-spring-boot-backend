@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 @Service
+@Transactional
 public class SellerService {
 
     private final ProductRepository productRepository;
@@ -36,7 +37,6 @@ public class SellerService {
         return sellerRepository.findByUserId(((User) userDetails).getId());
     }
 
-    @Transactional
     public ResponseEntity<?> addProduct(ProductDto productDto) {
         Product product = new Product();
         product.setTitle(productDto.getTitle());
@@ -84,7 +84,6 @@ public class SellerService {
         return new ResponseEntity<>("Product not found.", HttpStatus.NOT_FOUND);
     }
 
-    @Transactional
     public ResponseEntity<?> deleteProduct(Integer productId) {
         if (productRepository.findById(productId).isPresent()) {
             Product product = productRepository.findById(productId).get();
