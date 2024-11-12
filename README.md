@@ -5,7 +5,7 @@ manage essential functionalities of an online e-commerce store.
 
 ## Entity Relation Diagram
 
-<img src="/src/main/resources/static/img/e-commerce-diagram-v4.png" alt="diagram">
+<img src="/src/main/resources/static/img/e-commerce-diagram-v5.png" alt="diagram">
 
 ## RESTful Endpoints
 
@@ -41,7 +41,8 @@ manage essential functionalities of an online e-commerce store.
   - Show my products, can view own products only.
 - `PUT /api/seller/updateProduct?id={}`
   - Update a product by id, can update own product only.
-- Delete a product by id, can delete own product only.
+- `DELETE /api/seller/deleteProduct?id={}`
+  - Delete a product by id, can delete own product only.
 
 ### Customer
 
@@ -50,6 +51,6 @@ manage essential functionalities of an online e-commerce store.
 - Update from cart by product id.
 - Remove from cart by product id.
 - Get Cart Details
-- Place order, all iteams from cart.
+- Place order, all items from cart.
 - Cancel order by id.
-- Get all orders, can view own orderes only.
+- Get all orders, can view own orders only.

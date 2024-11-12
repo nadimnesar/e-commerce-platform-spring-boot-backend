@@ -1,6 +1,6 @@
 package com.nadimnesar.ecommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nadimnesar.ecommerce.enums.ProductCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,7 +38,7 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
-    @OneToOne
-    @JsonIgnore
+    @ManyToOne
+    @JsonBackReference
     private Seller seller;
 }

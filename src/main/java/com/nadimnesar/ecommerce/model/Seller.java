@@ -1,5 +1,6 @@
 package com.nadimnesar.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nadimnesar.ecommerce.auth.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,5 +22,6 @@ public class Seller {
     private User user;
 
     @OneToMany
+    @JsonManagedReference
     private List<Product> products;
 }

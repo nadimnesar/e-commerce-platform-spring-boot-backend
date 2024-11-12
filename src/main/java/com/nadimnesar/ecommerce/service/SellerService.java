@@ -37,7 +37,7 @@ public class SellerService {
     }
 
     @Transactional
-    public ResponseEntity<?> addProductService(ProductDto productDto) {
+    public ResponseEntity<?> addProduct(ProductDto productDto) {
         Product product = new Product();
         product.setTitle(productDto.getTitle());
         product.setBrand(productDto.getBrand());
@@ -82,5 +82,23 @@ public class SellerService {
             return new ResponseEntity<>("This product own my someone else.", HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>("Product not found.", HttpStatus.NOT_FOUND);
+    }
+
+    @Transactional
+    public ResponseEntity<?> deleteProduct(Integer productId) {
+        if (productRepository.findById(productId).isPresent()) {
+            Product product = productRepository.findById(productId).get();
+            Seller seller = getSellerInfo();
+            if (Objects.equals(product.getSeller().getId(), seller.getId())) {
+                seller.getProducts().remove(product);
+                sellerRepository.save(seller);
+                productRepository.delete(product);
+                return new ResponseEntity<>("Product deleted successfully.", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("This product own my someone else.", HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<>("Product not found.", HttpStatus.NOT_FOUND);
+        }
     }
 }

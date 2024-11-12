@@ -19,7 +19,7 @@ public class SellerController {
     @PreAuthorize("hasAuthority('SELLER')")
     @PostMapping("/addProduct")
     public ResponseEntity<?> addProduct(@RequestBody ProductDto productDto) {
-        return sellerService.addProductService(productDto);
+        return sellerService.addProduct(productDto);
     }
 
     @PreAuthorize("hasAuthority('SELLER')")
@@ -32,5 +32,11 @@ public class SellerController {
     @PutMapping("/updateProduct")
     public ResponseEntity<?> updateProduct(@RequestParam Integer id, @RequestBody ProductDto productDto) {
         return sellerService.updateProduct(id, productDto);
+    }
+
+    @PreAuthorize("hasAuthority('SELLER')")
+    @DeleteMapping("/deleteProduct")
+    public ResponseEntity<?> deleteProduct(@RequestParam Integer id) {
+        return sellerService.deleteProduct(id);
     }
 }
