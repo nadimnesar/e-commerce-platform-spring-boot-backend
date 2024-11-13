@@ -39,4 +39,22 @@ public class CustomerController {
     public ResponseEntity<?> getCart() {
         return customerService.getCart();
     }
+
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @PostMapping("/createOrder")
+    public ResponseEntity<?> createOrder() {
+        return customerService.createOrder();
+    }
+
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @GetMapping("/getOrders")
+    public ResponseEntity<?> getOrders() {
+        return customerService.getOrders();
+    }
+
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @DeleteMapping("/cancelOrder")
+    public ResponseEntity<?> cancelOrder(@RequestParam Integer orderId) {
+        return customerService.cancelOrder(orderId);
+    }
 }

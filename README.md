@@ -53,7 +53,10 @@ manage essential functionalities of an online e-commerce store.
 - `DELETE /api/customer/removeFromCart?productId={}&quantity={}`
   - Remove from cart by product id.
 - `GET /api/customer/getCart`
-  - Get Cart Details
-- Place order, all items from cart.
-- Cancel order by id.
-- Get all orders, can view own orders only.
+  - Get cart details
+- `POST /api/customer/createOrder`
+  - Place order, all items from cart.
+- `DELETE /api/customer/cancelOrder?orderId={}`
+  - Cancel order by id.
+- `GET /api/customer/getOrders`
+  - Get all orders, can view own orders only.

@@ -2,15 +2,9 @@ package com.nadimnesar.ecommerce.service;
 
 import com.nadimnesar.ecommerce.auth.model.User;
 import com.nadimnesar.ecommerce.dto.AddressDto;
-import com.nadimnesar.ecommerce.dto.CartDto;
-import com.nadimnesar.ecommerce.model.Cart;
-import com.nadimnesar.ecommerce.model.CartItem;
-import com.nadimnesar.ecommerce.model.Customer;
-import com.nadimnesar.ecommerce.model.Product;
-import com.nadimnesar.ecommerce.repository.CartItemRepository;
-import com.nadimnesar.ecommerce.repository.CartRepository;
-import com.nadimnesar.ecommerce.repository.CustomerRepository;
-import com.nadimnesar.ecommerce.repository.ProductRepository;
+import com.nadimnesar.ecommerce.enums.OrderStatus;
+import com.nadimnesar.ecommerce.model.*;
+import com.nadimnesar.ecommerce.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +12,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -29,12 +26,16 @@ public class CustomerService {
     private final ProductRepository productRepository;
     private final CartItemRepository cartItemRepository;
     private final CartRepository cartRepository;
+    private final OrderRepository orderRepository;
 
-    public CustomerService(CustomerRepository customerRepository, ProductRepository productRepository, CartItemRepository cartItemRepository, CartRepository cartRepository) {
+    public CustomerService(CustomerRepository customerRepository, ProductRepository productRepository,
+                           CartItemRepository cartItemRepository, CartRepository cartRepository,
+                           OrderRepository orderRepository) {
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
         this.cartItemRepository = cartItemRepository;
         this.cartRepository = cartRepository;
+        this.orderRepository = orderRepository;
     }
 
     private Customer getCustomerInfo() {
@@ -73,17 +74,19 @@ public class CustomerService {
         Customer customer = getCustomerInfo();
         Cart cart = customer.getCart();
 
-        for (CartItem cartItem : customer.getCart().getItems()) {
-            if (cartItem.getProduct().getId().equals(productId)) {
-                cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                cartItemRepository.save(cartItem);
+        if (!cart.getItems().isEmpty()) {
+            for (CartItem cartItem : customer.getCart().getItems()) {
+                if (cartItem.getProduct().getId().equals(productId)) {
+                    cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                    cartItemRepository.save(cartItem);
 
-                cart.setTotal(cart.getTotal() + (quantity * cartItem.getProduct().getPrice()));
-                cartRepository.save(cart);
+                    cart.setTotal(cart.getTotal() + (quantity * cartItem.getProduct().getPrice()));
+                    cartRepository.save(cart);
 
-                customer.setCart(cart);
-                customerRepository.save(customer);
-                return new ResponseEntity<>("Product added to cart successfully.", HttpStatus.CREATED);
+                    customer.setCart(cart);
+                    customerRepository.save(customer);
+                    return new ResponseEntity<>("Product added to cart successfully.", HttpStatus.CREATED);
+                }
             }
         }
 
@@ -115,7 +118,8 @@ public class CustomerService {
         for (CartItem cartItem : customer.getCart().getItems()) {
             if (cartItem.getProduct().getId().equals(productId)) {
                 if (cartItem.getQuantity() < quantity) {
-                    return new ResponseEntity<>("Quantity to remove exceeds the product's quantity in the cart.", HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(
+                            "Quantity to remove exceeds the product's quantity in the cart.", HttpStatus.BAD_REQUEST);
                 }
 
                 cartItem.setQuantity(cartItem.getQuantity() - quantity);
@@ -140,15 +144,73 @@ public class CustomerService {
         return new ResponseEntity<>("Product not found in cart.", HttpStatus.BAD_REQUEST);
     }
 
-    //TODO need to getItems by EAGER, why? need to check and fix
     public ResponseEntity<?> getCart() {
         Customer customer = getCustomerInfo();
+        Cart cart = customer.getCart();
 
-        CartDto cartDto = new CartDto();
-        cartDto.setId(customer.getCart().getId());
-        cartDto.setItems(customer.getCart().getItems());
-        cartDto.setTotal(customer.getCart().getTotal());
+        if (cart.getItems().isEmpty()) {
+            return new ResponseEntity<>("Cart is empty.", HttpStatus.BAD_REQUEST);
+        }
 
-        return new ResponseEntity<>(cartDto, HttpStatus.OK);
+        return new ResponseEntity<>(cart, HttpStatus.OK);
+    }
+
+    // TODO: creating order stock should be updated
+    public ResponseEntity<?> createOrder() {
+        Customer customer = getCustomerInfo();
+
+        if (customer.getCart().getItems().isEmpty()) {
+            return new ResponseEntity<>("Cart is empty.", HttpStatus.BAD_REQUEST);
+        } else if (customer.getAddress().getCountry() == null ||
+                customer.getAddress().getCity() == null ||
+                customer.getAddress().getState() == null ||
+                customer.getAddress().getPostalCode() == null ||
+                customer.getAddress().getLine1() == null) {
+            return new ResponseEntity<>("Please update full address!", HttpStatus.BAD_REQUEST);
+        }
+
+        Order order = new Order();
+        order.setCustomer(customer);
+        order.setCart(customer.getCart());
+        order.setDate(new Date());
+        order.setStatus(OrderStatus.Pending);
+        order.setShippingAddress(customer.getAddress());
+        orderRepository.save(order);
+
+        Cart cart = new Cart();
+        cart.setItems(new ArrayList<>());
+        cart.setTotal(0.0);
+        cartRepository.save(cart);
+
+        customer.setCart(cart);
+        customer.getOrders().add(order);
+        customerRepository.save(customer);
+
+        return new ResponseEntity<>("Order created successfully.", HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<?> getOrders() {
+        Customer customer = getCustomerInfo();
+
+        if (customer.getOrders().isEmpty()) {
+            return new ResponseEntity<>("No order placed yet.", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(customer.getOrders(), HttpStatus.OK);
+    }
+
+    // TODO: Order only can be canceled by customer, if it is in pending sate
+    // TODO: If order is canceled stock should be updated.
+    public ResponseEntity<?> cancelOrder(@RequestParam Integer orderId) {
+        Customer customer = getCustomerInfo();
+        for (Order order : customer.getOrders()) {
+            if (order.getId().equals(orderId)) {
+                order.setStatus(OrderStatus.Cancelled);
+                orderRepository.save(order);
+                customerRepository.save(customer);
+                return new ResponseEntity<>("Order cancelled successfully.", HttpStatus.CREATED);
+            }
+        }
+        return new ResponseEntity<>("This order id not belongs to you.", HttpStatus.BAD_REQUEST);
     }
 }

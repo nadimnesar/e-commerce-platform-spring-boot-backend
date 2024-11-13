@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private LocalDate date;
+    private Date date;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -27,9 +27,7 @@ public class Order {
     @OneToOne
     private Cart cart;
 
-    private Double total;
-
-    @OneToOne
+    @ManyToOne
     private Address shippingAddress;
 
     @ManyToOne
