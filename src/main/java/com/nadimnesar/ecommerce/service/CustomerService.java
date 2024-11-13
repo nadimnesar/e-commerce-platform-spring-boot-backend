@@ -155,7 +155,6 @@ public class CustomerService {
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
-    // TODO: creating order stock should be updated
     public ResponseEntity<?> createOrder() {
         Customer customer = getCustomerInfo();
 
@@ -199,12 +198,13 @@ public class CustomerService {
         return new ResponseEntity<>(customer.getOrders(), HttpStatus.OK);
     }
 
-    // TODO: Order only can be canceled by customer, if it is in pending sate
-    // TODO: If order is canceled stock should be updated.
     public ResponseEntity<?> cancelOrder(@RequestParam Integer orderId) {
         Customer customer = getCustomerInfo();
         for (Order order : customer.getOrders()) {
             if (order.getId().equals(orderId)) {
+                if (order.getStatus().equals(OrderStatus.Cancelled)) {
+                    return new ResponseEntity<>("Order already cancelled.", HttpStatus.BAD_REQUEST);
+                }
                 order.setStatus(OrderStatus.Cancelled);
                 orderRepository.save(order);
                 customerRepository.save(customer);

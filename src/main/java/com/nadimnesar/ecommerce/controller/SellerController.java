@@ -39,4 +39,16 @@ public class SellerController {
     public ResponseEntity<?> deleteProduct(@RequestParam Integer id) {
         return sellerService.deleteProduct(id);
     }
+
+    @PreAuthorize("hasAuthority('SELLER')")
+    @PostMapping("/addStock")
+    public ResponseEntity<?> addStock(@RequestParam Integer productId, @RequestParam Integer stock) {
+        return sellerService.addStock(productId, stock);
+    }
+
+    @PreAuthorize("hasAuthority('SELLER')")
+    @DeleteMapping("/removeStock")
+    public ResponseEntity<?> removeStock(@RequestParam Integer productId, @RequestParam Integer stock) {
+        return sellerService.removeStock(productId, stock);
+    }
 }

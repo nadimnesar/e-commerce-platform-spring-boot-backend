@@ -100,4 +100,27 @@ public class SellerService {
             return new ResponseEntity<>("Product not found.", HttpStatus.NOT_FOUND);
         }
     }
+
+    public ResponseEntity<?> addStock(Integer productId, Integer stock) {
+        if (productRepository.findById(productId).isPresent()) {
+            Product product = productRepository.findById(productId).get();
+            product.setStock(product.getStock() + stock);
+            productRepository.save(product);
+            return new ResponseEntity<>("Stock added successfully.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Product not found.", HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<?> removeStock(Integer productId, Integer stock) {
+        if (productRepository.findById(productId).isPresent()) {
+            Product product = productRepository.findById(productId).get();
+            if(product.getStock() < stock){
+                return new ResponseEntity<>("You didn't have enough stock to remove!", HttpStatus.BAD_REQUEST);
+            }
+            product.setStock(product.getStock() - stock);
+            productRepository.save(product);
+            return new ResponseEntity<>("Stock removed successfully.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Product not found.", HttpStatus.NOT_FOUND);
+    }
 }
