@@ -1,5 +1,6 @@
-package com.nadimnesar.ecommerce.auth.service;
+package com.nadimnesar.ecommerce.auth.filter;
 
+import com.nadimnesar.ecommerce.auth.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
